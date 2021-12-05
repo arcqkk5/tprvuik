@@ -37,11 +37,12 @@ def transformation_jordan(matrix, row, column):
         for i in range(4):
             for j in range(4):
                 if i != row and j != column:
-                    new_matrix[i][j] = matrix[i][j] - (matrix[i][column]*matrix[row][j]/matrix[row][column])
-                new_matrix[i][column] = (-1)*(matrix[i][column]/matrix[row][column])
-                new_matrix[row][j] = matrix[row][j]/matrix[row][column]
-        new_matrix[row][column] = 1/matrix[row][column]
+                    new_matrix[i][j] = round(matrix[i][j] - (matrix[i][column]*matrix[row][j]/matrix[row][column]), 2)
+                new_matrix[i][column] = round((-1)*(matrix[i][column]/matrix[row][column]), 2)
+                new_matrix[row][j] = round(matrix[row][j]/matrix[row][column], 2)
+        new_matrix[row][column] = round(1/matrix[row][column], 2)
     return new_matrix
+
 
 def check(matrix, verification_matrix, left_side):
     vec_tmp = []
@@ -54,8 +55,8 @@ def check(matrix, verification_matrix, left_side):
             print('Проверка итерации : '+ str(i+1))
             print(str(verification_matrix[i][0]) +' - (' +str(verification_matrix[i][1])+' * ' + str(X1) + ' + '
                 + str(verification_matrix[i][2])+' * ' + str(X2)+ ' + ' + str(verification_matrix[i][3])+' * '+ str(X3) + ') ' +
-                '= ' + str(vec_tmp[i]), end='')
-            if vec_tmp[i] >= 0:
+                '= ' +  str(abs(round(vec_tmp[i], 2))), end='')
+            if abs(round(vec_tmp[i], 2)) >= 0:
                 print(' >= 0')
             else:
                 print('Проверка не прошла!')
@@ -63,11 +64,11 @@ def check(matrix, verification_matrix, left_side):
             print('Проверка результата:')
             print(str(verification_matrix[i][0]) +' - (' +str(verification_matrix[i][1])+' * ' + str(X1) + ' + '
                   + str(verification_matrix[i][2])+' * ' + str(X2)+ ' + ' + str(verification_matrix[i][3])+' * '+ str(X3) + ') ' +
-                  '= ' + str(vec_tmp[i]), end='')
-            if vec_tmp[i] == matrix[i][0]:
+                  '= ' + str(round(vec_tmp[i], 1)), end='')
+            if round(vec_tmp[i], 1) == matrix[i][0]:
                 print(' =', matrix[i][0],'результату симплекс метода\nПроверка успешна\nОтвет:\nX1 = '
                       +str(X1)+'; X2 = '+ str(X2) + '; X3 = ' + str(X3) + '; F = '+
-                     str(abs(vec_tmp[3])))
+                     str(abs(round(vec_tmp[3], 1))))
             else:
                 print("Результат симплекс метода не верен!")
 
